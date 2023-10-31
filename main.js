@@ -817,41 +817,43 @@ $(function () {
   //    navigator.serial.addEventListener("disconnect", (e) => {
   // 	// Remove `e.target` from the list of available ports.
   //    });
+  const button = document.getElementById('connect-button'); // Gantilah 'connect-button' dengan ID elemen HTML yang digunakan untuk memicu tindakan pengguna
+
+button.addEventListener('click', async () => {
   if ('serial' in navigator) {
-	try {
-	  (async () => {
-	    const port = await navigator.serial.requestPort();
-	    await port.open({ baudRate: 9600 });
-   
-	    // Initialize reader and writer
-	    const reader = port.readable.getReader();
-	    const writer = port.writable.getWriter();
-   
-	    // Store the reader and writer for later use (if needed)
-	    this.reader = reader;
-	    this.writer = writer;
-   
-	    // Handle incoming data (you can implement this as needed)
-	    this.reader.read().then(({ value, done }) => {
-		 if (done) {
-		   console.log('Read operation completed.');
-		   return;
-		 }
-		 // Process the received data in the 'value' variable
-		 console.log('Received data:', value);
-   
-		 // Continue reading data
-		 this.reader.read().then(/* handle next data */);
-	    });
-	  })();
-	} catch (err) {
-	  console.error('There was an error opening the serial port:', err);
-	}
-   } else {
-	console.error('The Web Serial API is not supported in your browser.');
-   }
-   
-   
+    try {
+      const port = await navigator.serial.requestPort();
+      await port.open({ baudRate: 9600 });
+
+      // Initialize reader and writer
+      const reader = port.readable.getReader();
+      const writer = port.writable.getWriter();
+
+      // Store the reader and writer for later use (if needed)
+      this.reader = reader;
+      this.writer = writer;
+
+      // Handle incoming data (you can implement this as needed)
+      this.reader.read().then(({ value, done }) => {
+        if (done) {
+          console.log('Read operation completed.');
+          return;
+        }
+        // Process the received data in the 'value' variable
+        console.log('Received data:', value);
+
+        // Continue reading data
+        this.reader.read().then(/* handle next data */);
+      });
+    } catch (err) {
+      console.error('There was an error opening the serial port:', err);
+    }
+  } else {
+    console.error('The Web Serial API is not supported in your browser.');
+  }
+});
+
+
   navigator.serial.getPorts().then((ports) => {
     console.log("tes port");
     ports.forEach((port) => {
