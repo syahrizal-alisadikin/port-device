@@ -808,16 +808,16 @@ $(function () {
   // 	}
   // });
 //   console.log(chrome.serial);
-  navigator.serial.addEventListener("connect", (e) => {
-	console.log(e)
+//   navigator.serial.addEventListener("connect", (e) => {
+// 	console.log(e)
 
-	// Connect to `e.target` or add it to a list of available ports.
-   });
+// 	// Connect to `e.target` or add it to a list of available ports.
+//    });
    
    
-   navigator.serial.addEventListener("disconnect", (e) => {
-	// Remove `e.target` from the list of available ports.
-   });
+//    navigator.serial.addEventListener("disconnect", (e) => {
+// 	// Remove `e.target` from the list of available ports.
+//    });
    
 	navigator.serial.getPorts().then((ports) => {
 		console.log("tes port");
